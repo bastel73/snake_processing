@@ -66,7 +66,7 @@ public class Game extends Thread{
         while(true) {
             StringBuilder returnString=new StringBuilder();
             try {
-                Thread.sleep(30);
+                Thread.sleep(70);
 
             } catch (InterruptedException e) {
                 e.printStackTrace();

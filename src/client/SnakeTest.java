@@ -120,7 +120,7 @@ public class SnakeTest extends PApplet implements Runnable{
     }
 
     public static void main(String[] args) {
-        SnakeTest snakeGame = new SnakeTest();
+        //SnakeTest snakeGame = new SnakeTest();
         //snakeGame.socketClient.start();
         PApplet.main("client.SnakeTest");
         String[] array = PFont.list();

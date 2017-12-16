@@ -43,4 +43,8 @@ public class Snake {
     public List<PVector> getParts() {
         return parts;
     }
+
+    public void grow(){
+        this.size++;
+    }
 }
