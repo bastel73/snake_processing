@@ -5,59 +5,36 @@ import shared.Snake;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Observable;
 
-public class Game extends Thread{
-
-    class Player {
-        final PlayerConnection playerConnection;
-        final Snake snake;
-        final PVector direction;
-
-        public Player(PlayerConnection playerConnection, Snake snake, PVector direction) {
-            this.playerConnection = playerConnection;
-            this.snake = snake;
-            this.direction = direction;
-        }
-
-        public void move() {
-            snake.moveBy(direction);
-        }
-
-        public String position() {
-            return "pos "+ playerConnection.getPlayerName()+" "+snake.head().x+" "+snake.head().y;
-        }
-
-        public String getSnakeData(){
-            StringBuilder returnString=new StringBuilder();
-
-            returnString.append(playerConnection.getPlayerName()+" ");
-
-            for (PVector vector:snake.getParts()){
-
-                returnString.append(vector.x);
-                returnString.append(" "+vector.y+" ");
-
-            }
-            returnString.append("/");
-            return returnString.toString();
-        }
-    }
+public class Game extends Observable implements Runnable{
 
     private final Map<String, Player> players = new HashMap<>();
 
+    private PVector food;
+
+
+    public Game() {
+        this.food=new PVector(300,300);
+
+
+    }
+
     public synchronized void registerClient(PlayerConnection playerConnection) {
-        System.out.println("GameClient registered: "+ playerConnection.getPlayerName());
+        System.out.println("NetworkClient registered: "+ playerConnection.getPlayerName());
         players.put(
                 playerConnection.getPlayerName(),
                 new Player(
                         playerConnection, new Snake(100,100), new PVector(1,0)
                 )
         );
+
     }
 
     public synchronized void unregisterClient(PlayerConnection playerConnection) {
-        System.out.println("GameClient unregistered: "+ playerConnection.getPlayerName());
+        System.out.println("NetworkClient unregistered: "+ playerConnection.getPlayerName());
         players.remove(playerConnection.getPlayerName());
+        Thread.currentThread().interrupt();
     }
 
     @Override
@@ -65,8 +42,9 @@ public class Game extends Thread{
 
         while(true) {
             StringBuilder returnString=new StringBuilder();
+            returnString.append(insertFoodData());
             try {
-                Thread.sleep(70);
+                Thread.sleep(30);
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -74,14 +52,30 @@ public class Game extends Thread{
 
             for (Player player : players.values()) {
                 player.move();
+
+
             }
 
             for (Player player : players.values()) {
-                System.out.println("Player : " + player.position());
+                if(player.getSnake().head().dist(food)<5){
+                    resetFood();
+                    player.getSnake().grow();
+                }
+                if(player.getSnake().head().x<20 || player.getSnake().head().y<20 ||
+                        player.getSnake().head().x>1000 || player.getSnake().head().y>740){
+                    returnString.append("ter"+"#");
+                }
+
                 returnString.append(player.getSnakeData());
             }
+
             broadcast(returnString.toString());
+
         }
+    }
+
+    private String insertFoodData(){
+        return "food "+food.x+" "+food.y+"/";
     }
 
     private void broadcast(String position) {
@@ -90,7 +84,16 @@ public class Game extends Thread{
         }
     }
 
+    public void resetFood(){
+        food=new PVector((int)((Math.random()*1000)+1), (int)(Math.random()*745)+20);
+    }
+
     public synchronized void setDirection(String playerName, float x, float y) {
         players.get(playerName).direction.set(x,y).normalize();
     }
+
+    public void terminatePlayer(String name){
+        players.remove(name);
+    }
+
 }

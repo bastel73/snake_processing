@@ -4,24 +4,25 @@ import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 
-public class GameClient extends Thread{
+public class NetworkClient extends Thread{
     private InetAddress ipAddress;
     private Socket socket;
-    private SnakeTest game;
+
     private DataInputStream input;
     private DataOutputStream output;
 
     private String id;
 
-    public GameClient (String ipAddress){
+    public NetworkClient() {
 
         try{
             this.socket=new Socket("localhost", 3333);
             input = new DataInputStream(socket.getInputStream());
             output = new DataOutputStream(socket.getOutputStream());
-            id=this.readString("Bitte Namen eingeben : ");
-            sendData(id);
-            this.start();
+            //id=readString("Bitte Namen eingeben: ");
+            id=new Login().getLoginID();
+            System.out.println("Player --->"+id);
+            this.sendData(id);
 
         }catch(IOException e){
             e.printStackTrace();
@@ -37,8 +38,7 @@ public class GameClient extends Thread{
         }
 
     }
-
-    public String receiveData (){
+    public String receiveData(){
         String returnString;
         try {
             returnString=input.readUTF();
@@ -52,11 +52,13 @@ public class GameClient extends Thread{
 
     }
 
+
+
     /*private InetAddress ipAddress;
     private DatagramSocket socket;
     private Game game;
 
-    public GameClient(String ipAddress){
+    public NetworkClient(String ipAddress){
 
         try{
             this.socket=new DatagramSocket();
@@ -105,5 +107,9 @@ public class GameClient extends Thread{
         }
 
     }
+
+    /*public static void main(String[] args) {
+        new NetworkClient("localhost");
+    }*/
 
 }

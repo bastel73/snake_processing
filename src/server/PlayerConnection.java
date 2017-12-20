@@ -12,37 +12,54 @@ public class PlayerConnection extends Thread {
     private final DataOutputStream output;
     private final String playerName;
     private String line;
+    private Socket socket;
+    private boolean running;
 
     public PlayerConnection(Socket socket, Game game) throws IOException {
 
-        this.input = new DataInputStream(socket.getInputStream());
-        this.output = new DataOutputStream(socket.getOutputStream());
+        this.socket=socket;
+        this.input = new DataInputStream(this.socket.getInputStream());
+        this.output = new DataOutputStream(this.socket.getOutputStream());
         this.game = game;
-        System.out.println("Konstruktor");
+
         // Expect player name as first input
         this.playerName = input.readUTF();
-
+        this.running=true;
 
     }
 
     @Override
-    public void run() {
+    public synchronized void run() {
 
         try {
-            while ( (line = input.readUTF()) != null) {
+                while (running){
+                line=input.readUTF();
                 if (line.startsWith("dir")) {
                     System.out.println(line);
                     Scanner s = new Scanner(line.substring(3)).useLocale(Locale.US);
                     game.setDirection(playerName, s.nextFloat(), s.nextFloat());
 
                 }
+                if (line.startsWith("ter")) {
+                    this.game.terminatePlayer(line.substring(3));
+                    this.input.close();
+                    this.output.close();
+                    this.socket.close();
+                    this.stopThread();
+
+                }
             }
-            game.unregisterClient(this);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    public void stopThread(){
+        game.unregisterClient(this);
+        this.running=false;
+        this.currentThread().interrupt();
+    }
 
     public void send(String msg) {
         try {
