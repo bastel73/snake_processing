@@ -29,7 +29,7 @@ public class PlayerConnection extends Thread {
     }
 
     @Override
-    public synchronized void run() {
+    public void run() {
 
         try {
                 while (running){
@@ -41,12 +41,19 @@ public class PlayerConnection extends Thread {
 
                 }
                 if (line.startsWith("ter")) {
-                    this.game.terminatePlayer(line.substring(3));
                     this.input.close();
                     this.output.close();
                     this.socket.close();
                     this.stopThread();
+                }
+                if (line.startsWith("stop")){
+                    //this.running=false;
+                    //currentThread().interrupt();
 
+                }
+                if(line.startsWith("start")){
+                    this.game.reset(playerName);
+                    this.game.setDirection(playerName, 1,0);
                 }
             }
 
@@ -58,7 +65,7 @@ public class PlayerConnection extends Thread {
     public void stopThread(){
         game.unregisterClient(this);
         this.running=false;
-        this.currentThread().interrupt();
+        currentThread().interrupt();
     }
 
     public void send(String msg) {

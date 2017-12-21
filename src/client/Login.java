@@ -61,6 +61,8 @@ public class Login {
         while(!controller.returnSendStatus()) {
             System.out.println(controller.returnSendStatus());
         }
+        frame.setVisible(false);
+
         return textField.getText();
     }
 }

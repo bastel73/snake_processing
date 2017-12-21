@@ -10,7 +10,7 @@ public class Server {
 
 
     public static void main(String[] args) throws IOException {
-        ServerSocket server = new ServerSocket(3333);
+        ServerSocket server = new ServerSocket(3337);
         gameThread.start();
 
         while (true) {

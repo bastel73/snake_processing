@@ -8,6 +8,7 @@ import shared.Snake;
 import java.util.Locale;
 import java.util.Scanner;
 
+import static java.awt.event.KeyEvent.VK_ENTER;
 import static java.awt.event.KeyEvent.VK_SPACE;
 
 enum Rotation {
@@ -34,11 +35,10 @@ public class GamePlay extends PApplet implements Runnable {
         rotation = Rotation.NONE;
         snake = new Snake(100, 100);
         socketClient = new NetworkClient();
-        //socketClient.start();
-        this.foodX=300;
-        this.foodY=300;
-        gameThread = new Thread(this);
         //gameThread.start();
+        this.foodX = 300;
+        this.foodY = 300;
+
 
     }
 
@@ -48,11 +48,7 @@ public class GamePlay extends PApplet implements Runnable {
     }
 
 
-    public synchronized void drawSnake(Snake snake) {
-        /*for (int i = snake.getParts().size()-1; i>=0; i--) {
-            PVector v = snake.getParts().get(i);
-            ellipse(v.x, v.y, 20,20);
-        }*/
+    public void drawSnake() {
 
         String newData = socketClient.receiveData();
         String[] data = newData.split("/");
@@ -72,10 +68,12 @@ public class GamePlay extends PApplet implements Runnable {
 
         for (int i = 1; i < data.length; i++) {
             String[] workData = data[i].split("#");
-            if(workData[0].startsWith("ter")){
-                socketClient.sendData("ter"+"#"+workData[1]);
-                this.stop();
-            }else {
+            if (workData[1].startsWith("ter")) {
+                text("Schlange " + workData[0] + " hat die Bande gerammt", 110, 110);
+                text("Respawn mit Enter-Taste", 130,130);
+                //this.direction.set(1,0);
+                socketClient.sendData("stop");
+            } else {
                 fill(i * 55 + 30);
 
                 Scanner sc = new Scanner(workData[1]).useLocale(Locale.US);
@@ -92,7 +90,6 @@ public class GamePlay extends PApplet implements Runnable {
             }
         }
 
-
     }
 
     @Override
@@ -104,11 +101,8 @@ public class GamePlay extends PApplet implements Runnable {
         } else if (rotation == Rotation.RIGHT) {
             direction.rotate(0.1f);
         }
-
-        snake.moveBy(direction);
-        drawSnake(snake);
-
-
+        socketClient.sendData("dir" + direction.x + " " + direction.y);
+        drawSnake();
     }
 
     @Override
@@ -124,6 +118,10 @@ public class GamePlay extends PApplet implements Runnable {
             case VK_SPACE:
                 socketClient.sendData("ter");
                 this.stop();
+                break;
+            case VK_ENTER:
+                socketClient.sendData("start");
+                break;
         }
 
 
@@ -135,10 +133,9 @@ public class GamePlay extends PApplet implements Runnable {
         this.exit();
     }
 
-
     @Override
     public void keyReleased() {
-        socketClient.sendData("dir" + direction.x + " " + direction.y);
+
         rotation = Rotation.NONE;
     }
 
@@ -147,16 +144,12 @@ public class GamePlay extends PApplet implements Runnable {
 
     }
 
-    private void drawFood() {
-
-    }
-
     public static void main(String[] args) {
-        //SnakeTest snakeGame = new SnakeTest();
-        //snakeGame.socketClient.start();
+
         PApplet.main("client.GamePlay");
 
     }
+
 
 
 }

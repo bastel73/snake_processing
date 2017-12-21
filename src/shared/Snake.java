@@ -4,10 +4,12 @@ import processing.core.PVector;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Observable;
 
-public class Snake {
+public class Snake extends Observable {
     private int size = 20;
     private List<PVector> parts = new LinkedList<>();
+
 
     public Snake(float x, float y) {
         for (int i=0; i< size; i++) {

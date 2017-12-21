@@ -61,12 +61,9 @@ public class Game extends Observable implements Runnable{
                     resetFood();
                     player.getSnake().grow();
                 }
-                if(player.getSnake().head().x<20 || player.getSnake().head().y<20 ||
-                        player.getSnake().head().x>1000 || player.getSnake().head().y>740){
-                    returnString.append("ter"+"#");
-                }
 
                 returnString.append(player.getSnakeData());
+
             }
 
             broadcast(returnString.toString());
@@ -80,7 +77,9 @@ public class Game extends Observable implements Runnable{
 
     private void broadcast(String position) {
         for (Player p : players.values()) {
-            p.playerConnection.send(position);
+
+                p.playerConnection.send(position);
+
         }
     }
 
@@ -92,8 +91,8 @@ public class Game extends Observable implements Runnable{
         players.get(playerName).direction.set(x,y).normalize();
     }
 
-    public void terminatePlayer(String name){
-        players.remove(name);
-    }
+    public void reset(String playerName){
 
+        players.get(playerName).reSpawnPlayer();
+    }
 }
