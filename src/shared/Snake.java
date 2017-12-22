@@ -49,7 +49,7 @@ public class Snake extends Observable {
     public void grow(){
         this.size++;
         System.out.println("Schlangengröße --->>>>>>"+this.size);
-        PVector tail=parts.get(parts.size()-1);
+        PVector tail = parts.get(parts.size()-1);
         parts.add(tail);
     }
 }
