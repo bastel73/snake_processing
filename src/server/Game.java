@@ -63,6 +63,7 @@ public class Game extends Observable implements Runnable{
             }
 
             //check player player collision
+            //doesn't work fully
             for(Player player : players.values()){
                 PVector head = player.getSnake().head();
                 for(Player enemie : players.values()){
