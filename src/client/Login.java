@@ -1,5 +1,4 @@
 /*Test-Kommentar Julian*/
-/*Test-Kommentar2 Julian*/
 
 package client;
 
