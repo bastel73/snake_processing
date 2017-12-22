@@ -5,7 +5,9 @@ import processing.core.PVector;
 import processing.event.KeyEvent;
 import shared.Snake;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Scanner;
 
 import static java.awt.event.KeyEvent.VK_ENTER;
@@ -24,20 +26,14 @@ public class GamePlay extends PApplet implements Runnable {
 
     private PVector direction;
     private Rotation rotation;
-    private Snake snake;
-    private Thread gameThread;
-    private float foodX;
-    private float foodY;
+
     private NetworkClient socketClient;
 
     public GamePlay() {
         direction = new PVector(1, 0);
         rotation = Rotation.NONE;
-        snake = new Snake(100, 100);
+
         this.socketClient = new NetworkClient();
-        //gameThread.start();
-        this.foodX = 300;
-        this.foodY = 300;
 
     }
 
@@ -70,19 +66,17 @@ public class GamePlay extends PApplet implements Runnable {
             if (workData[1].startsWith("ter")) {
                 text("Schlange " + workData[0] + " hat die Bande gerammt", 110, 110);
                 text("Respawn mit Enter-Taste", 130,130);
-                //this.direction.set(1,0);
+
                 socketClient.sendData("stop");
             } else {
                 fill(i * 55 + 30);
 
                 Scanner sc = new Scanner(workData[1]).useLocale(Locale.US);
                 text(workData[0], sc.nextFloat() + 10, sc.nextFloat() + 10);
-                //for (int z = 0; z < 18; z++) {
-                int x = 0;
+
+
                 while (sc.hasNext()) {
                     ellipse(sc.nextFloat(), sc.nextFloat(), 30, 30);
-                    //System.out.println("length-----" + x);
-                    x++;
                 }
 
                 sc.close();

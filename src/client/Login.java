@@ -24,10 +24,6 @@ public class Login {
             frame.setVisible(false);
         }
 
-        public boolean returnSendStatus() {
-            return status;
-
-        }
     }
 
     private JFrame frame;
