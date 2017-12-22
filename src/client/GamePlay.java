@@ -34,11 +34,10 @@ public class GamePlay extends PApplet implements Runnable {
         direction = new PVector(1, 0);
         rotation = Rotation.NONE;
         snake = new Snake(100, 100);
-        socketClient = new NetworkClient();
+        this.socketClient = new NetworkClient();
         //gameThread.start();
         this.foodX = 300;
         this.foodY = 300;
-
 
     }
 
@@ -82,7 +81,7 @@ public class GamePlay extends PApplet implements Runnable {
                 int x = 0;
                 while (sc.hasNext()) {
                     ellipse(sc.nextFloat(), sc.nextFloat(), 30, 30);
-                    System.out.println("length-----" + x);
+                    //System.out.println("length-----" + x);
                     x++;
                 }
 
@@ -94,15 +93,16 @@ public class GamePlay extends PApplet implements Runnable {
 
     @Override
     public void draw() {
-        background(0, 255, 0);
-
-        if (rotation == Rotation.LEFT) {
-            direction.rotate(-0.1f);
-        } else if (rotation == Rotation.RIGHT) {
-            direction.rotate(0.1f);
+        if(this.socketClient.isLoggedIn()) {
+            background(0, 255, 0);
+            if (rotation == Rotation.LEFT) {
+                direction.rotate(-0.1f);
+            } else if (rotation == Rotation.RIGHT) {
+                direction.rotate(0.1f);
+            }
+            socketClient.sendData("dir" + direction.x + " " + direction.y);
+            drawSnake();
         }
-        socketClient.sendData("dir" + direction.x + " " + direction.y);
-        drawSnake();
     }
 
     @Override
@@ -144,12 +144,9 @@ public class GamePlay extends PApplet implements Runnable {
 
     }
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args){
         PApplet.main("client.GamePlay");
-
     }
-
 
 
 }

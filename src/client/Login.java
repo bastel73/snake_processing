@@ -18,12 +18,15 @@ public class Login {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            this.status=true;
+            this.status = true;
             System.out.println(status);
+            updateLoginObserver();
+            frame.setVisible(false);
         }
 
         public boolean returnSendStatus() {
             return status;
+
         }
     }
 
@@ -32,6 +35,7 @@ public class Login {
     private JTextField textField;
     private JButton button;
     boolean status;
+    private NetworkClient networkClient;
     ButtonController controller;
 
 
@@ -55,14 +59,13 @@ public class Login {
         frame.setVisible(true);
     }
 
-    public String getLoginID() {
-
-        //lasst euch was einfallen, wie man das verbessern kann
-        while(!controller.returnSendStatus()) {
-            System.out.println(controller.returnSendStatus());
-        }
-        frame.setVisible(false);
-
-        return textField.getText();
+    private void updateLoginObserver(){
+        this.networkClient.hasLoggedIn(textField.getText());
     }
+
+
+    public void addLoginObserver(NetworkClient client){
+        this.networkClient = client;
+    }
+
 }
