@@ -6,27 +6,35 @@ import java.net.Socket;
 
 public class NetworkClient{
 
-    private Socket socket;
-
     private DataInputStream input;
     private DataOutputStream output;
-
+    private GamePlay gamePlay;
+    private boolean loggedIn = false;
     private String id;
 
     public NetworkClient() {
 
         try{
-            this.socket=new Socket("localhost", 3337);
+            Socket socket = new Socket("localhost", 3337);
             input = new DataInputStream(socket.getInputStream());
             output = new DataOutputStream(socket.getOutputStream());
 
-            id=new Login().getLoginID();
-            System.out.println("Player --->"+id);
-            this.sendData(id);
+            Login loginDialog = new Login();
+            loginDialog.addLoginObserver(this);
 
         }catch(IOException e){
             e.printStackTrace();
         }
+    }
+
+    public void hasLoggedIn(String loginName){
+        this.loggedIn = true;
+        System.out.println("Player --->"+ loginName);
+        this.sendData(loginName);
+    }
+
+    public boolean isLoggedIn(){
+        return this.loggedIn;
     }
 
     public void sendData(String message){
@@ -42,9 +50,9 @@ public class NetworkClient{
     public String receiveData(){
         String returnString;
         try {
-            returnString=input.readUTF();
-            System.out.println(returnString);
-            System.out.println("----------------------------------------");
+            returnString = input.readUTF();
+            //System.out.println(returnString);
+            //System.out.println("----------------------------------------");
             return returnString;
         } catch (IOException e) {
             e.printStackTrace();
