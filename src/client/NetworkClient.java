@@ -3,14 +3,16 @@ package client;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.Map;
 
 public class NetworkClient{
 
     private DataInputStream input;
     private DataOutputStream output;
-    private GamePlay gamePlay;
+
     private boolean loggedIn = false;
-    private String id;
+    //Ziel ist es, die Daten hier zwischenzuspeichern. Somit muss in der GamePlay Klasse nur noch Darstellung und Steuerung der Schlange realisiert werden.
+    private Map<String, float[]> playerData;
 
     public NetworkClient() {
 
@@ -51,8 +53,6 @@ public class NetworkClient{
         String returnString;
         try {
             returnString = input.readUTF();
-            //System.out.println(returnString);
-            //System.out.println("----------------------------------------");
             return returnString;
         } catch (IOException e) {
             e.printStackTrace();

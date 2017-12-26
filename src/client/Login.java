@@ -1,3 +1,5 @@
+/*Test-Kommentar 2 Julian*/
+
 package client;
 
 import javax.swing.*;
@@ -24,10 +26,6 @@ public class Login {
             frame.setVisible(false);
         }
 
-        public boolean returnSendStatus() {
-            return status;
-
-        }
     }
 
     private JFrame frame;
