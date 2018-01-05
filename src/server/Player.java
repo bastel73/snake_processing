@@ -17,13 +17,12 @@ public class Player extends Observable{
         this.playerConnection = playerConnection;
         this.snake = snake;
         this.direction = direction;
-        alive=true;
+        alive = true;
         addObserver(new CollisionObserverBorder());
         addObserver(new CollisionObserverFood());
     }
 
     public void move() {
-
         snake.moveBy(direction);
         setChanged();
         notifyObservers(snake.head());
@@ -32,13 +31,10 @@ public class Player extends Observable{
 
     public String getSnakeData(){
 
-
         if(this.alive) {
             returnString = playerConnection.getPlayerName() + "#";
             for (PVector vector : snake.getParts()) {
-
                 returnString += vector.x + " " + vector.y + " ";
-
             }
             returnString += "/";
         }
@@ -54,10 +50,8 @@ public class Player extends Observable{
     }
 
     public void setPlayerDead(){
-        this.alive=false;
-        
-        this.returnString=playerConnection.getPlayerName()+"#"+"ter"+"/";
-
+        this.alive = false;
+        this.returnString = playerConnection.getPlayerName()+"#"+"ter"+"/";
     }
 
     public void reSpawnPlayer(){
@@ -67,7 +61,7 @@ public class Player extends Observable{
         this.snake.moveTo(new PVector(300.0f,300.0f));
         this.move();
         System.out.println("Direction :"+this.direction);
-        this.alive=true;
+        this.alive = true;
     }
 
 
