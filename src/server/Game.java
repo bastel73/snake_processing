@@ -118,17 +118,22 @@ public class Game extends Observable implements Runnable{
     }
 
     /**
+     * Sets the direction of movement of a player.
      *
-     * @param playerName
-     * @param x
-     * @param y
+     * @param playerName players name
+     * @param x value of x-axis
+     * @param y value of y-axis
      */
     public synchronized void setDirection(String playerName, float x, float y) {
         players.get(playerName).direction.set(x,y).normalize();
     }
 
+    /**
+     * Reset a single player.
+     *
+     * @param playerName unique name of the player
+     */
     public void reset(String playerName){
-
         players.get(playerName).reSpawnPlayer();
     }
 }
