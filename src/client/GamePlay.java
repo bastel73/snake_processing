@@ -17,10 +17,19 @@ enum Rotation {
     NONE, LEFT, RIGHT
 }
 
+/**
+ * Represents a game session and provides the logic for it.
+ */
 public class GamePlay extends PApplet implements Runnable {
 
-
+    /**
+     * The width of the player window
+     */
     public static final int SCREEN_X = 1024;
+
+    /**
+     * The height of the player window
+     */
     public static final int SCREEN_Y = 768;
 
 

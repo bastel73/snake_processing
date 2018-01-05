@@ -6,6 +6,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 
+/**
+ * Represents the player's character.
+ */
 public class Snake extends Observable {
     private int size = 20;
     private List<PVector> parts = new LinkedList<>();

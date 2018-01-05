@@ -6,6 +6,9 @@ import java.net.Socket;
 import java.util.Locale;
 import java.util.Scanner;
 
+/**
+ * Represents communication with a participating player.
+ */
 public class PlayerConnection extends Thread {
     private final Game game;
     private final DataInputStream input;
@@ -24,7 +27,7 @@ public class PlayerConnection extends Thread {
 
         // Expect player name as first input
         this.playerName = input.readUTF();
-        this.running=true;
+        this.running = true;
 
     }
 
@@ -80,7 +83,6 @@ public class PlayerConnection extends Thread {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     /**

@@ -5,6 +5,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Represents the server login to initialize a game session.
+ */
 public class Login {
     class ButtonController implements ActionListener {
         private boolean status;

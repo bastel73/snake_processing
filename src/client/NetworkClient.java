@@ -5,6 +5,9 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Map;
 
+/**
+ * Represents the communication between client and server.
+ */
 public class NetworkClient{
 
     private DataInputStream input;

@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 
+/**
+ * Represents a game in which several players can participate.
+ */
 public class Game extends Observable implements Runnable{
 
     private final Map<String, Player> players = new HashMap<>();

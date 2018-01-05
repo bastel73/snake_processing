@@ -5,6 +5,9 @@ import shared.Snake;
 
 import java.util.Observable;
 
+/**
+ * Represents a single player participating in a multiplayer session.
+ */
 public class Player extends Observable{
     final PlayerConnection playerConnection;
     final Snake snake;

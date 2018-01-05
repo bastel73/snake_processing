@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * Represents a server on which a game is running.
+ */
 public class Server {
     private static Game game = new Game();
     private static Thread gameThread=new Thread(game);
