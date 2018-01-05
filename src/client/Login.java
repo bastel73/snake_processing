@@ -1,14 +1,10 @@
-/*Test-Kommentar 2 Julian*/
-
 package client;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-/*
-Hier wird das Login geregelt. Das ist bisher schmutzig programmiert. Lasst Euch was einfallen, wie das besser geht.
- */
+
 public class Login {
     class ButtonController implements ActionListener {
         private boolean status;
@@ -57,11 +53,18 @@ public class Login {
         frame.setVisible(true);
     }
 
+    /**
+     * Informs the network client about successful login
+     */
     private void updateLoginObserver(){
         this.networkClient.hasLoggedIn(textField.getText());
     }
 
-
+    /**
+     * Adds a client that depends on the successful login
+     *
+     * @param client network client to be informed
+     */
     public void addLoginObserver(NetworkClient client){
         this.networkClient = client;
     }
