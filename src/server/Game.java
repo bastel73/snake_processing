@@ -13,13 +13,15 @@ public class Game extends Observable implements Runnable{
 
     private PVector food;
 
-
     public Game() {
         this.food=new PVector(300,300);
-
-
     }
 
+    /**
+     * Registers a new user who wants to participate in the current game.
+     *
+     * @param playerConnection client server connection of the user
+     */
     public synchronized void registerClient(PlayerConnection playerConnection) {
         System.out.println("NetworkClient registered: "+ playerConnection.getPlayerName());
         players.put(
@@ -31,6 +33,11 @@ public class Game extends Observable implements Runnable{
 
     }
 
+    /**
+     * Removes a registered user from the running game.
+     *
+     * @param playerConnection client server connection of the user
+     */
     public synchronized void unregisterClient(PlayerConnection playerConnection) {
         System.out.println("NetworkClient unregistered: "+ playerConnection.getPlayerName());
         players.remove(playerConnection.getPlayerName());
@@ -83,22 +90,39 @@ public class Game extends Observable implements Runnable{
         }
     }
 
+    /**
+     * Adds the current x and y position of the food in a string.
+     *
+     * @return a string with the current x and y position of the food.
+     */
     private String insertFoodData(){
         return "food "+food.x+" "+food.y+"/";
     }
 
-    private void broadcast(String position) {
+    /**
+     * Sends position data about players and food to the players.
+     *
+     * @param broadcastMsg combined position data
+     */
+    private void broadcast(String broadcastMsg) {
         for (Player p : players.values()) {
-
-                p.playerConnection.send(position);
-
+            p.playerConnection.send(broadcastMsg);
         }
     }
 
+    /**
+     * Defines a new position of the food.
+     */
     public void resetFood(){
-        food=new PVector((int)((Math.random()*1000)+1), (int)(Math.random()*745)+20);
+        food = new PVector((int)((Math.random()*1000)+1), (int)(Math.random()*745)+20);
     }
 
+    /**
+     *
+     * @param playerName
+     * @param x
+     * @param y
+     */
     public synchronized void setDirection(String playerName, float x, float y) {
         players.get(playerName).direction.set(x,y).normalize();
     }
