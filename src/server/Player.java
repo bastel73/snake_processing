@@ -22,13 +22,21 @@ public class Player extends Observable{
         addObserver(new CollisionObserverFood());
     }
 
+    /**
+     * Moves the snake one step in a certain direction.
+     *
+     */
     public void move() {
         snake.moveBy(direction);
         setChanged();
         notifyObservers(snake.head());
     }
 
-
+    /**
+     * Provides basic information about the snake required for processing by the client.
+     *
+     * @return combined string with the name of the snake and positions of the body parts
+     */
     public String getSnakeData(){
 
         if(this.alive) {
@@ -41,19 +49,33 @@ public class Player extends Observable{
         return returnString;
     }
 
+    /**
+     *
+     * @return returns the snake object of the player
+     */
     public Snake getSnake(){
         return snake;
     }
 
+    /**
+     *
+     * @return is true when the player is alive.
+     */
     public boolean isAlive() {
         return alive;
     }
 
+    /**
+     * Marks the player as dead and informs the client.
+     */
     public void setPlayerDead(){
         this.alive = false;
         this.returnString = playerConnection.getPlayerName()+"#"+"ter"+"/";
     }
 
+    /**
+     * Resets the player status and sets the snake to a standard position.
+     */
     public void reSpawnPlayer(){
         System.out.println("Direction vorher :"+this.direction);
 
