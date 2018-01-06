@@ -6,6 +6,9 @@ import java.net.Socket;
 import java.util.Locale;
 import java.util.Scanner;
 
+/**
+ * Represents communication with a participating player.
+ */
 public class PlayerConnection extends Thread {
     private final Game game;
     private final DataInputStream input;
@@ -24,7 +27,7 @@ public class PlayerConnection extends Thread {
 
         // Expect player name as first input
         this.playerName = input.readUTF();
-        this.running=true;
+        this.running = true;
 
     }
 
@@ -33,7 +36,7 @@ public class PlayerConnection extends Thread {
 
         try {
                 while (running){
-                line=input.readUTF();
+                line = input.readUTF();
                 if (line.startsWith("dir")) {
                     System.out.println(line);
                     Scanner s = new Scanner(line.substring(3)).useLocale(Locale.US);
@@ -68,6 +71,11 @@ public class PlayerConnection extends Thread {
         currentThread().interrupt();
     }
 
+    /**
+     * Sends data to the client via socket connection.
+     *
+     * @param msg formatted data to be sent
+     */
     public void send(String msg) {
         try {
             output.writeUTF(msg);
@@ -75,9 +83,12 @@ public class PlayerConnection extends Thread {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
+    /**
+     *
+     * @return the name chosen by the player.
+     */
     public String getPlayerName() {
         return playerName;
     }
