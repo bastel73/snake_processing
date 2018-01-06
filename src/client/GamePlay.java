@@ -20,7 +20,7 @@ enum Rotation {
 /**
  * Represents a game session and provides the logic for it.
  */
-public class GamePlay extends PApplet implements Runnable {
+public class GamePlay extends PApplet {
 
     /**
      * The width of the player window
@@ -62,7 +62,7 @@ public class GamePlay extends PApplet implements Runnable {
         if (data[0].startsWith("food")) {
             Scanner sc = new Scanner(data[0].substring(4)).useLocale(Locale.US);
 
-            fill(153);
+            fill(128,21,21);
             ellipse(sc.nextFloat(), sc.nextFloat(), 30, 30);
             sc.close();
         }
@@ -142,11 +142,6 @@ public class GamePlay extends PApplet implements Runnable {
     public void keyReleased() {
 
         rotation = Rotation.NONE;
-    }
-
-    @Override
-    public void run() {
-
     }
 
     public static void main(String[] args){
