@@ -46,11 +46,7 @@ public class PlayerConnection extends Thread {
                     this.socket.close();
                     this.stopThread();
                 }
-                if (line.startsWith("stop")){
-                    //this.running=false;
-                    //currentThread().interrupt();
 
-                }
                 if(line.startsWith("start")){
                     this.game.reset(playerName);
                     this.game.setDirection(playerName, 1,0);

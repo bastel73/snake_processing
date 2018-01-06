@@ -17,6 +17,8 @@ enum Rotation {
     NONE, LEFT, RIGHT
 }
 
+
+
 public class GamePlay extends PApplet implements Runnable {
 
 
@@ -51,7 +53,7 @@ public class GamePlay extends PApplet implements Runnable {
         if (data[0].startsWith("food")) {
             Scanner sc = new Scanner(data[0].substring(4)).useLocale(Locale.US);
 
-            fill(153);
+            fill(230,0,0);
             ellipse(sc.nextFloat(), sc.nextFloat(), 30, 30);
             sc.close();
         }
@@ -69,7 +71,7 @@ public class GamePlay extends PApplet implements Runnable {
 
                 socketClient.sendData("stop");
             } else {
-                fill(i * 55 + 30);
+                fill(i*18+75);
 
                 Scanner sc = new Scanner(workData[1]).useLocale(Locale.US);
                 text(workData[0], sc.nextFloat() + 10, sc.nextFloat() + 10);
