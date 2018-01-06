@@ -79,8 +79,7 @@ public class Game extends Observable implements Runnable{
                 for(Player enemie : players.values()){
                     for (PVector vector : enemie.getSnake().getParts()) {
                         if(player != enemie) {
-                            if (Math.round(head.x) == Math.round(vector.x) && Math.round(head.y) == Math.round(vector.y)){
-                                System.out.println("PlayerCollision");
+                            if(head.dist(vector)<7){
                                 player.setPlayerDead();
                             }
                         }
