@@ -17,12 +17,19 @@ enum Rotation {
     NONE, LEFT, RIGHT
 }
 
-
-
+/**
+ * Represents a game session and provides the logic for it.
+ */
 public class GamePlay extends PApplet implements Runnable {
 
-
+    /**
+     * The width of the player window
+     */
     public static final int SCREEN_X = 1024;
+
+    /**
+     * The height of the player window
+     */
     public static final int SCREEN_Y = 768;
 
 
@@ -44,7 +51,9 @@ public class GamePlay extends PApplet implements Runnable {
         size(SCREEN_X, SCREEN_Y, "processing.opengl.PGraphics2D");
     }
 
-
+    /**
+     * Draws the screen elements such as text fields, the foot and snakes
+     */
     public void drawSnake() {
 
         String newData = socketClient.receiveData();
@@ -53,7 +62,7 @@ public class GamePlay extends PApplet implements Runnable {
         if (data[0].startsWith("food")) {
             Scanner sc = new Scanner(data[0].substring(4)).useLocale(Locale.US);
 
-            fill(230,0,0);
+            fill(153);
             ellipse(sc.nextFloat(), sc.nextFloat(), 30, 30);
             sc.close();
         }
@@ -71,7 +80,7 @@ public class GamePlay extends PApplet implements Runnable {
 
                 socketClient.sendData("stop");
             } else {
-                fill(i*18+75);
+                fill(i * 55 + 30);
 
                 Scanner sc = new Scanner(workData[1]).useLocale(Locale.US);
                 text(workData[0], sc.nextFloat() + 10, sc.nextFloat() + 10);

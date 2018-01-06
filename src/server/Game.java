@@ -63,17 +63,16 @@ public class Game extends Observable implements Runnable{
             }
 
             //check player player collision
-
+            //doesn't work fully
             for(Player player : players.values()){
                 PVector head = player.getSnake().head();
-                for(Player enemy : players.values()){
-                    for (PVector vector : enemy.getSnake().getParts()) {
-                        if(player != enemy) {
-                            if (head.dist(vector)<5){
+                for(Player enemie : players.values()){
+                    for (PVector vector : enemie.getSnake().getParts()) {
+                        if(player != enemie) {
+                            if (Math.round(head.x) == Math.round(vector.x) && Math.round(head.y) == Math.round(vector.y)){
                                 System.out.println("PlayerCollision");
                                 player.setPlayerDead();
                             }
-
                         }
                     }
                 }
@@ -97,7 +96,7 @@ public class Game extends Observable implements Runnable{
     }
 
     public void resetFood(){
-        food=new PVector((int)((Math.random()*1000)+1), (int)(Math.random()*740)+1);
+        food=new PVector((int)((Math.random()*1000)+1), (int)(Math.random()*745)+20);
     }
 
     public synchronized void setDirection(String playerName, float x, float y) {
