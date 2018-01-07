@@ -44,7 +44,7 @@ public class Game extends Observable implements Runnable{
             StringBuilder returnString=new StringBuilder();
             returnString.append(insertFoodData());
             try {
-                Thread.sleep(10);
+                Thread.sleep(30);
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -52,6 +52,7 @@ public class Game extends Observable implements Runnable{
 
             for (Player player : players.values()) {
                 player.move();
+                returnString.append(player.getSnakeData());
             }
 
             for (Player player : players.values()) {
@@ -59,11 +60,10 @@ public class Game extends Observable implements Runnable{
                     resetFood();
                     player.getSnake().grow();
                 }
-                returnString.append(player.getSnakeData());
+                
             }
 
-            //check player player collision
-            //doesn't work fully
+            
             for(Player player : players.values()){
                 PVector head = player.getSnake().head();
                 for(Player enemy : players.values()){
