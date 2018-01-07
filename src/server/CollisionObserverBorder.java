@@ -5,6 +5,9 @@ import processing.core.PVector;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * Reports collision with a wall.
+ */
 public class CollisionObserverBorder implements Observer {
 
 
