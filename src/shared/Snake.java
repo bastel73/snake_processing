@@ -36,10 +36,17 @@ public class Snake extends Observable {
         parts = newparts;
     }
 
+    /**
+     * Determines the direction of movement of the snake.
+     * @param direction vector of the direction of movement
+     */
     public void moveBy(PVector direction) {
         moveTo(PVector.add(head(), direction));
     }
 
+    /**
+     * @return the first element of the snake
+     */
     public PVector head() {
         return parts.get(0);
     }
@@ -49,6 +56,9 @@ public class Snake extends Observable {
         return parts;
     }
 
+    /**
+     * Makes the snake grow by one element and is typically called when the player has collected food.
+     */
     public void grow(){
         this.size++;
         System.out.println("Schlangengröße --->>>>>>"+this.size);
