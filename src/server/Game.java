@@ -13,10 +13,11 @@ public class Game extends Observable implements Runnable{
 
     private PVector food;
 
+    private boolean running;
 
     public Game() {
         this.food=new PVector(300,300);
-
+        this.running=true;
 
     }
 
@@ -40,7 +41,7 @@ public class Game extends Observable implements Runnable{
     @Override
     public void run() {
 
-        while(true) {
+        while(running) {
             StringBuilder returnString=new StringBuilder();
             returnString.append(insertFoodData());
             try {
@@ -106,5 +107,9 @@ public class Game extends Observable implements Runnable{
     public void reset(String playerName){
 
         players.get(playerName).reSpawnPlayer();
+    }
+
+    public void stop(){
+        this.running=false;
     }
 }

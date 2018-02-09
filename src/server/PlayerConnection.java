@@ -53,6 +53,7 @@ public class PlayerConnection extends Thread {
                 if(line.startsWith("start")){
                     this.game.reset(playerName);
                     this.game.setDirection(playerName, 1,0);
+                    this.game.stop();
                 }
             }
 
@@ -64,7 +65,7 @@ public class PlayerConnection extends Thread {
     public void stopThread(){
         game.unregisterClient(this);
         this.running=false;
-        currentThread().interrupt();
+
     }
 
     /**
